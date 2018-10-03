@@ -17,6 +17,14 @@ public class Film {
 		this.id=id;
 		this.titel=titel; 
 	}
+
+	public Film(long id, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
+		this.id=id;
+		this.titel=titel; 
+		this.voorraad=voorraad;
+		this.gereserveerd=gereserveerd;
+		this.prijs=prijs; 
+	}
 	
 	public long getId() {
 		return id;

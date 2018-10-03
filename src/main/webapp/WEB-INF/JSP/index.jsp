@@ -30,10 +30,19 @@
 		</ul>
 
 		<c:if test='${not empty films}'>
-			<p>hallo</p> 
 			<ul>
 				<c:forEach var='film' items='${films}'>
-					<li>${film.titel}</li>
+					<%-- <li>${film.titel}</li> --%>
+					<%-- <img src="/images/1.jpg" title='${film.titel}'> --%>
+					<%-- <img src='<c:url value="/images/1.jpg"/>' title='${film.titel}'> --%>
+					<c:choose> 
+						<c:when test='${film.gereserveerd<film.voorraad}'> 
+							<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} reservatie mogelijk'>					
+						</c:when>
+						<c:otherwise>
+							<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} reservatie niet mogelijk'>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 				
 			</ul>

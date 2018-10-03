@@ -1,7 +1,9 @@
 package be.vdab.retrovideo.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,10 @@ import be.vdab.retrovideo.entities.Genre;
 public class JdbcFilmRepository implements FilmRepository {
 	private final JdbcTemplate template;
 	private static final String SELECT_ALL_GENRES="select id, naam from genres order by naam";
-	private static final String SELECT_FILMS_BY_GENRE="select id, titel from films where genreid=?"; 
+	private static final String SELECT_FILMS_BY_GENRE="select id, titel, voorraad, gereserveerd, prijs from films where genreid=?"; 
+	private static final String READ = "select id, titel, voorraad, gereserveerd, prijs from films where id=?"; 
 	private final RowMapper<Genre> genreRowMapper=(resultSet, rowNum) -> new Genre(resultSet.getLong("id"), resultSet.getString("naam")); 
-	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getString("titel"));
+	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getString("titel"), resultSet.getInt("voorraad"), resultSet.getInt("gereserveerd"), resultSet.getBigDecimal("prijs"));
 
 	JdbcFilmRepository(JdbcTemplate template) {
 		this.template=template; 
@@ -32,5 +35,16 @@ public class JdbcFilmRepository implements FilmRepository {
 	public List<Film> findFilmsByGenre(long id) {
 		return template.query(SELECT_FILMS_BY_GENRE, filmRowMapper, id); 
 	} 
+	
+	@Override
+	public Optional<Film> read(long id) {
+		try {
+			return Optional.of(template.queryForObject(READ,  filmRowMapper, id));
+		}
+		catch (IncorrectResultSizeDataAccessException ex) {
+			return Optional.empty(); 
+		}
+ 
+	}
 	
 }

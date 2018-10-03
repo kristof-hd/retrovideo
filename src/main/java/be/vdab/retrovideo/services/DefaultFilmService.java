@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -28,6 +29,11 @@ public class DefaultFilmService implements FilmService {
 	@Override
 	public List<Film> findFilmsByGenre(long id) {
 		return filmRepository.findFilmsByGenre(id); 
-	}	
+	}
+	
+	@Override
+	public Optional<Film> read(long id) {
+		return filmRepository.read(id);
+	}
 	
 }
