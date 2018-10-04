@@ -37,6 +37,7 @@ public class DefaultFilmService implements FilmService {
 	}
 	
 	@Override
+	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
 	public void update(Film film) {
 		filmRepository.update(film);
 	}

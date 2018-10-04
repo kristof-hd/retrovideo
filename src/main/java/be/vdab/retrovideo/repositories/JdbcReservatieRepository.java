@@ -24,8 +24,8 @@ public class JdbcReservatieRepository implements ReservatieRepository {
 	@Override 
 	public void create(Reservatie reservatie) {
 		Map<String, Object> kolomWaarden = new HashMap<>(); 
-		kolomWaarden.put("klantid", reservatie.getKlantId()); 
-		kolomWaarden.put("filmid", reservatie.getFilmId());
+		kolomWaarden.put("klantId", reservatie.getKlantId()); 
+		kolomWaarden.put("filmId", reservatie.getFilmId());
 		kolomWaarden.put("reservatie", LocalDateTime.now());
 		insert.executeAndReturnKey(kolomWaarden); 
 	}

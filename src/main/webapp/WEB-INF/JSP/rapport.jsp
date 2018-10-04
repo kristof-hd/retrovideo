@@ -14,14 +14,9 @@
 
 	</head>
 	<body>
-		<c:import url='/WEB-INF/JSP/menuUitgebreid.jsp'/>
-		<h1>Bevestigen</h1>  
-		<p>${aantalArtikelsInMandje} film(s) voor ${klant.voornaam} ${klant.familienaam}</p>
-		<c:url value='/bevestigen/{id}' var='url'/>
-		<form:form action='${url}' modelAttribute='reservatie' method='post'>
-			<form:input path='klantId'/>
-			<input type='submit' value='Bevestigen' id='toevoegknop'>
-		</form:form>
+		<c:import url='/WEB-INF/JSP/menu.jsp'/>
+		<h1>Rapport</h1>
+		<p>De reservatie is OK.</p>
 
 	</body>
 </html>
