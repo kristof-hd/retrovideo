@@ -25,7 +25,11 @@
 		<c:if test='${not empty klanten}'>
 			<ul>
 			<c:forEach items='${klanten}' var='klant'>
-			<li>${klant.familienaam}</li>
+<%-- 			<li>${klant.familienaam}</li> --%>
+				<spring:url value='/bevestigen/{id}' var='url'>
+					<spring:param name='id' value='${klant.id}'/>
+				</spring:url>
+				<li><a href='${url}'>${klant.voornaam} ${klant.familienaam}</a></li>
 			</c:forEach>
 			</ul>
 		</c:if>

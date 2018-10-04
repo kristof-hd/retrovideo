@@ -36,4 +36,9 @@ public class DefaultFilmService implements FilmService {
 		return filmRepository.read(id);
 	}
 	
+	@Override
+	public void update(Film film) {
+		filmRepository.update(film);
+	}
+	
 }

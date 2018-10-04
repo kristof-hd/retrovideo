@@ -12,21 +12,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.retrovideo.entities.Film;
 import be.vdab.retrovideo.services.FilmService;
+import be.vdab.retrovideo.services.KlantService;
 
 @Controller
-@RequestMapping
+@RequestMapping("/")
 public class FilmController {
 
 	private static final String FILM_VIEW="film";
 	private static final String MANDJE_VIEW="mandje";
+	private static final String BEVESTIGEN_VIEW="bevestigen";
 	private static final String REDIRECT_NA_TOEVOEGEN="redirect:/mandje";
 	
-	private final FilmService filmService;
+	private final FilmService filmService; 
+	private final KlantService klantService;
 	private final Mandje mandje; 
 	
-	public FilmController(Mandje mandje, FilmService filmService) {
+	public FilmController(Mandje mandje, FilmService filmService, KlantService klantService) {
 		this.mandje=mandje; 
 		this.filmService=filmService; 
+		this.klantService=klantService;
 	}
 	
 	private List<Film> maakFilmsVanFilmIds(List<Long> filmIds) {
@@ -58,6 +62,15 @@ public class FilmController {
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
 		modelAndView.addObject("filmsInMandje", maakFilmsVanFilmIds(mandje.getFilmIds()));
 		return modelAndView; 
+	}
+	
+	@GetMapping("bevestigen/{id}")
+	ModelAndView bevestigen(@PathVariable long id) {
+		mandje.setKlantId(id);
+		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW); 
+		klantService.readKlant(id).ifPresent(klant -> modelAndView.addObject(klant));
+		modelAndView.addObject("aantalArtikelsInMandje", mandje.telAantalArtikelsInMandje()); 
+		return modelAndView;  
 	}
 	
 }

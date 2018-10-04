@@ -13,6 +13,7 @@ public class DefaultMandje implements Serializable, Mandje {
 
 	private static final long serialVersionUID=1L; 
 	private final List<Long> filmIds=new ArrayList<>(); 
+	private long klantId; 
 	
 	@Override
 	public void addFilmId(long filmId) {
@@ -22,6 +23,16 @@ public class DefaultMandje implements Serializable, Mandje {
 	@Override
 	public List<Long> getFilmIds(){
 		return filmIds; 
+	}
+	
+	@Override
+	public int telAantalArtikelsInMandje() {
+		return filmIds.size();  
+	}
+	
+	@Override
+	public void setKlantId(long klantId) {
+		this.klantId=klantId; 
 	}
 	
 }

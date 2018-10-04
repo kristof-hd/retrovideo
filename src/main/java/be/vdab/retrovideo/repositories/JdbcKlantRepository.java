@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,8 +17,14 @@ public class JdbcKlantRepository implements KlantRepository {
 		this.template=template; 
 	}
 	
-	private static final String SELECT_BY_FAMILIENAAM_BEVAT="select id, familienaam from klanten where familienaam like ?";
-	private final RowMapper<Klant> klantRowMapper = (resultSet, rowNum) -> new Klant(resultSet.getLong("id"), resultSet.getString("familienaam")); 
+	private static final String SELECT_BY_FAMILIENAAM_BEVAT="select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten where familienaam like ? order by familienaam";
+	private static final String READ="select id, familienaam, voornaam, straatNummer, postcode, gemeente from klanten where id=?"; 
+	private final RowMapper<Klant> klantRowMapper = (resultSet, rowNum) -> new Klant(resultSet.getLong("id"), resultSet.getString("familienaam"), resultSet.getString("voornaam"), resultSet.getString("straatNummer"), resultSet.getString("postcode"), resultSet.getString("gemeente")); 
+
+	@Override
+	public Optional<Klant> readKlant(long id) {
+		return Optional.of(template.queryForObject(READ, klantRowMapper, id)); 
+	}
 	
 	@Override
 	public List<Klant> findByFamilienaamBevat(String familienaamBevat) {

@@ -17,6 +17,7 @@ public class JdbcFilmRepository implements FilmRepository {
 	private static final String SELECT_ALL_GENRES="select id, naam from genres order by naam";
 	private static final String SELECT_FILMS_BY_GENRE="select id, titel, voorraad, gereserveerd, prijs from films where genreid=?"; 
 	private static final String READ = "select id, titel, voorraad, gereserveerd, prijs from films where id=?"; 
+	private static final String UPDATE_FILMS="update films set gereserveerd=gereserveerd+1 where id=?"; 
 	private final RowMapper<Genre> genreRowMapper=(resultSet, rowNum) -> new Genre(resultSet.getLong("id"), resultSet.getString("naam")); 
 	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getString("titel"), resultSet.getInt("voorraad"), resultSet.getInt("gereserveerd"), resultSet.getBigDecimal("prijs"));
 
@@ -45,6 +46,11 @@ public class JdbcFilmRepository implements FilmRepository {
 			return Optional.empty(); 
 		}
  
+	}
+	
+	@Override
+	public void update(Film film) {
+		template.update(UPDATE_FILMS, film.getGereserveerd()); 
 	}
 	
 }

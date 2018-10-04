@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -16,6 +17,11 @@ public class DefaultKlantService implements KlantService {
 	private final KlantRepository klantRepository;
 	DefaultKlantService(KlantRepository klantRepository) {
 		this.klantRepository=klantRepository; 
+	}
+	
+	@Override
+	public Optional<Klant> readKlant(long id){
+		return klantRepository.readKlant(id); 
 	}
 	
 	@Override

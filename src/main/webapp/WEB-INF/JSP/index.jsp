@@ -37,7 +37,12 @@
 					<%-- <img src='<c:url value="/images/1.jpg"/>' title='${film.titel}'> --%>
 					<c:choose> 
 						<c:when test='${film.gereserveerd<film.voorraad}'> 
-							<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} reservatie mogelijk'>					
+							<spring:url value='/films/{id}' var='url'>
+								<spring:param name='id' value='${film.id}'/>
+							</spring:url>
+							<a href='${url}'>
+								<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} reservatie mogelijk'>					
+							</a>
 						</c:when>
 						<c:otherwise>
 							<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} reservatie niet mogelijk'>
