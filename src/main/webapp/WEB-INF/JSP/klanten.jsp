@@ -5,13 +5,10 @@
 <!doctype html>
 <html lang='nl'>
 	<head>
-		
 			<title>Retrovideo</title>
-			<link rel='icon' href='images/retrovideo.ico' type='image/x-icon'>
+			<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
 			<meta name='viewport' content='width=device-width,initial-scale=1'>
-			<link rel='stylesheet' href='css/retrovideo2.css'>
-		
-
+			<link rel='stylesheet' href='<c:url value="/css/retrovideo2.css"/>'>
 	</head>
 	<body>
 		<c:import url='/WEB-INF/JSP/menuUitgebreid.jsp'/>
@@ -22,19 +19,34 @@
 			<form:input path='familienaamBevat' autofocus='autofocus'/>
 			<input type='submit' value='Zoeken'> <form:errors cssClass='fout'/> 
 		</form:form>
+		<br>
 		<c:if test='${not empty klanten}'>
-			<ul>
-			<c:forEach items='${klanten}' var='klant'>
-<%-- 			<li>${klant.familienaam}</li> --%>
-				<spring:url value='/bevestigen/{id}' var='url'>
-					<spring:param name='id' value='${klant.id}'/>
-				</spring:url>
-				<li>
-					<a href='${url}'>${klant.voornaam} ${klant.familienaam}</a>
-					${klant.straatNummer} ${klant.postcode} ${klant.gemeente}
-				</li>
-			</c:forEach>
-			</ul>
+			<table>
+				<thead>
+					<tr>
+						<th>Naam</th>
+						<th>Straat + huisnummer</th>
+						<th>Postcode</th>
+						<th>Gemeente</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items='${klanten}' var='klant'>
+						<spring:url value='/bevestigen/{id}' var='url'>
+							<spring:param name='id' value='${klant.id}'/>
+						</spring:url>
+						<tr>
+							<td>
+								<a href='${url}'>${klant.voornaam} ${klant.familienaam}</a>
+							</td>
+							<td>${klant.straatNummer}</td>
+							<td>${klant.postcode}</td>
+							<td>${klant.gemeente}</td> 
+						</tr>
+					</c:forEach>				
+				</tbody>
+
+			</table>
 		</c:if>
 	</body>
 </html>

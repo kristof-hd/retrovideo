@@ -7,9 +7,9 @@
 	<head>
 		
 			<title>Retrovideo</title>
-			<link rel='icon' href='images/retrovideo.ico' type='image/x-icon'>
+			<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
 			<meta name='viewport' content='width=device-width,initial-scale=1'>
-			<link rel='stylesheet' href='css/retrovideo.css'>
+			<link rel='stylesheet' href='<c:url value="/css/retrovideo2.css"/>'>
 		
 
 	</head>

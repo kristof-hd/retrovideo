@@ -23,17 +23,8 @@ public class IndexController {
 		this.filmService=filmService; 
 	}
 	
-//	@GetMapping
-//	String index() {
-//		return "/WEB-INF/JSP/index.jsp"; 
-//	}
-
 	@GetMapping
 	ModelAndView index() {
-		//String boodschap="hallo hallo";
-		//return new ModelAndView("/WEB-INF/JSP/index.jsp", "boodschap", boodschap);
-		//return new ModelAndView("index", "boodschap", boodschap);
-		//List<Genre> genres=Arrays.asList(new Genre(1,"Test"));
 		List<Genre> genres = filmService.findGenres(); 
 		return new ModelAndView("index", "genres", genres); 
 	}
@@ -42,9 +33,7 @@ public class IndexController {
 	ModelAndView index(@PathVariable long id) {
 		List<Film> films = filmService.findFilmsByGenre(id);
 		List<Genre> genres = filmService.findGenres();
-		//List<Film> films = Arrays.asList(new Film(1, "test"));
-		//return new ModelAndView("index", "films", films); 
-		ModelAndView modelAndView = new ModelAndView("index", "films", films);
+		ModelAndView modelAndView = new ModelAndView("filmsPerGenre", "films", films);
 		modelAndView.addObject("genres", genres);
 		return modelAndView;
 	}
