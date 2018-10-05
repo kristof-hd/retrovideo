@@ -7,7 +7,7 @@
 			<title>Retrovideo</title>
 			<link rel='icon' href='images/retrovideo.ico' type='image/x-icon'>
 			<meta name='viewport' content='width=device-width,initial-scale=1'>
-			<link rel='stylesheet' href='css/retrovideo.css'>
+			<link rel='stylesheet' href='css/retrovideo2.css'>
 	</head>
 	<body>
 		<c:import url='/WEB-INF/JSP/menu.jsp'/>
@@ -25,18 +25,18 @@
 				<dt>Gereserveerd</dt>
 				<dd>${film.gereserveerd}</dd>
 				<dt>Beschikbaar</dt>
- 				<dd>${film.voorraad-film.gereserveerd}</dd> 
+				<dd>${film.beschikbaar}</dd>
+<%--  				<dd>${film.voorraad-film.gereserveerd}</dd>  --%>
 			</dl>
 		</c:if>
 		<c:url value='/films/{id}' var='url'/>
-		<form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>
-			<form:input path='filmId'/>
-			<input type='submit' value='In mandje' id='toevoegknop'>
-		</form:form>
-		<c:if test='${not empty filmsInMandje}'>
-		<h2>Mandje</h2>
-		<ul> <c:forEach items='${filmsInMandje}' var='film'> <li>${film.naam}</li></c:forEach></ul>
+		<c:if test='${film.beschikbaar>0}'>
+			<form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>
+				<form:input path='filmId'/>
+				<input type='submit' value='In mandje' id='toevoegknop'>
+			</form:form>
 		</c:if>
+
 
 	</body>
 </html>

@@ -6,6 +6,12 @@ public class Reservatie {
 	private long klantId;
 	private long filmId;
 	private LocalDateTime reservatie;
+
+	public Reservatie(long klantId, long filmId) {
+		this.klantId=klantId;
+		this.filmId=filmId; 		
+	}
+	
 	public long getKlantId() {
 		return klantId;
 	}

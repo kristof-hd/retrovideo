@@ -21,6 +21,11 @@ public class DefaultMandje implements Serializable, Mandje {
 	}
 	
 	@Override
+	public void verwijderFilmId(long filmId) {
+		filmIds.remove(filmId); 
+	}
+	
+	@Override
 	public List<Long> getFilmIds(){
 		return filmIds; 
 	}

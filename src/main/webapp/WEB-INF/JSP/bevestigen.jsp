@@ -18,7 +18,7 @@
 		<h1>Bevestigen</h1>  
 		<p>${aantalArtikelsInMandje} film(s) voor ${klant.voornaam} ${klant.familienaam}</p>
 		<c:url value='/bevestigen/{id}' var='url'/>
-		<form:form action='${url}' modelAttribute='reservatie' method='post'>
+		<form:form action='${url}' modelAttribute='reservatieForm' method='post'>
 			<form:input path='klantId'/>
 			<input type='submit' value='Bevestigen' id='toevoegknop'>
 		</form:form>

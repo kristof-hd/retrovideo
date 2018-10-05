@@ -9,7 +9,7 @@
 			<title>Retrovideo</title>
 			<link rel='icon' href='images/retrovideo.ico' type='image/x-icon'>
 			<meta name='viewport' content='width=device-width,initial-scale=1'>
-			<link rel='stylesheet' href='css/retrovideo.css'>
+			<link rel='stylesheet' href='css/retrovideo2.css'>
 		
 
 	</head>
@@ -29,7 +29,10 @@
 				<spring:url value='/bevestigen/{id}' var='url'>
 					<spring:param name='id' value='${klant.id}'/>
 				</spring:url>
-				<li><a href='${url}'>${klant.voornaam} ${klant.familienaam}</a></li>
+				<li>
+					<a href='${url}'>${klant.voornaam} ${klant.familienaam}</a>
+					${klant.straatNummer} ${klant.postcode} ${klant.gemeente}
+				</li>
 			</c:forEach>
 			</ul>
 		</c:if>

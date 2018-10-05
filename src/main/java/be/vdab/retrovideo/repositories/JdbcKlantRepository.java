@@ -3,6 +3,7 @@ package be.vdab.retrovideo.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -23,9 +24,12 @@ public class JdbcKlantRepository implements KlantRepository {
 
 	@Override
 	public Optional<Klant> readKlant(long id) {
-		return Optional.of(template.queryForObject(READ, klantRowMapper, id)); 
+		try {return Optional.of(template.queryForObject(READ, klantRowMapper, id));}
+		catch (IncorrectResultSizeDataAccessException ex) {
+			return Optional.empty(); 
+		}
 	}
-	
+
 	@Override
 	public List<Klant> findByFamilienaamBevat(String familienaamBevat) {
 		return template.query(SELECT_BY_FAMILIENAAM_BEVAT, klantRowMapper, '%'+familienaamBevat+'%'); 

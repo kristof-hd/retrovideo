@@ -73,4 +73,8 @@ public class Film {
 	public void setPrijs(BigDecimal prijs) {
 		this.prijs = prijs;
 	}
+	
+	public long getBeschikbaar() {
+		return voorraad-gereserveerd; 
+	}
 }

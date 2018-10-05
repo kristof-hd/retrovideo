@@ -1,9 +1,11 @@
 package be.vdab.retrovideo.web;
 
-import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +30,17 @@ public class KlantController {
 	}
 	
 	@GetMapping(params="familienaamBevat")
-	ModelAndView klantenZoeken(KlantenZoekenForm form) {
+	ModelAndView klantenZoeken(@Valid KlantenZoekenForm form, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView(KLANTEN_VIEW);
-		//List<Klant> klanten = Arrays.asList(new Klant(1,"test"));
+		if(bindingResult.hasErrors()) {
+			return modelAndView; 
+		}
 		List<Klant> klanten = klantService.findByFamilienaamBevat(form.getFamilienaamBevat());
-		modelAndView.addObject("klanten", klanten); 
+		if(klanten.isEmpty()) {
+			bindingResult.reject("geenKlanten");
+		} else {
+			modelAndView.addObject("klanten", klanten);
+		}
 		return modelAndView; 
 	}
 }
