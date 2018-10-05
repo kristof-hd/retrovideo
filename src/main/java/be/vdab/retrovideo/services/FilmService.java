@@ -8,7 +8,6 @@ import be.vdab.retrovideo.entities.Genre;
 
 public interface FilmService {
 
-	List<Genre> findGenres(); 
 	List<Film> findFilmsByGenre(long id);
 	Optional<Film> read(long id); 
 	void update(Film film); 

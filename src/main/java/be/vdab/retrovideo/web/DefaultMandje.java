@@ -2,6 +2,7 @@ package be.vdab.retrovideo.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +24,15 @@ public class DefaultMandje implements Serializable, Mandje {
 	@Override
 	public void verwijderFilmId(long filmId) {
 		filmIds.remove(filmId); 
+	}
+
+	@Override
+	public void verwijderFilmIds(long[] ids) {
+
+		for (long id : ids) {
+			
+			filmIds.remove(id); 
+		}
 	}
 	
 	@Override

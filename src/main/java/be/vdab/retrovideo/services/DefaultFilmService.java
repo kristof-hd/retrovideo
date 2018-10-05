@@ -21,10 +21,10 @@ public class DefaultFilmService implements FilmService {
 		this.filmRepository=filmRepository; 
 	}
 	
-	@Override
-	public List<Genre> findGenres() {
-		return filmRepository.findGenres(); 
-	}
+//	@Override
+//	public List<Genre> findGenres() {
+//		return filmRepository.findGenres(); 
+//	}
 	
 	@Override
 	public List<Film> findFilmsByGenre(long id) {

@@ -81,11 +81,17 @@ public class FilmController {
 		return modelAndView; 
 	}
 	
+//	@PostMapping("mandje")
+//	String verwijderFilmId(long verwijderid) {
+//		mandje.verwijderFilmId(verwijderid);
+//		return REDIRECT_NA_VERWIJDEREN; 
+//	}
+
 	@PostMapping("mandje")
-	String verwijderFilmId(long verwijderid) {
-		mandje.verwijderFilmId(verwijderid);
+	String verwijder(long[] verwijderid) {
+		mandje.verwijderFilmIds(verwijderid);
 		return REDIRECT_NA_VERWIJDEREN; 
-	}
+	}	
 	
 	@GetMapping("bevestigen/{id}")
 	ModelAndView bevestigen(@PathVariable long id) {

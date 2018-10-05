@@ -26,6 +26,9 @@
 <%-- 			</c:forEach> --%>
 <!-- 		</ul> -->
 
+			<c:url value='mandje' var='url'/>
+			<form:form action='${url}' method='post'>
+
 			<table border="1">
 				<thead>
 					<tr>
@@ -41,16 +44,21 @@
 						<td>${film.prijs}</td>
 						<td>
 						
-							<form:form action='${url}' method='post'>
-		 						<input type='checkbox' name='verwijderid' value='${film.id}'>
-		 						<input type='submit' value='Verwijderen'>
-							</form:form>
-						
+<%-- 							<form:form action='${url}' method='post'> --%>
+<%-- 		 						<input type='checkbox' name='verwijderid' value='${film.id}'> --%>
+<!-- 		 						<input type='submit' value='Verwijderen'> -->
+<%-- 							</form:form> --%>
+
+								<input type='checkbox' name='verwijderid' value='${film.id}'>						
+
 						</td>
 					</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+
+			<input type='submit' value='Verwijderen'>
+			</form:form>
 
 		</c:if>
 		<p>Totaal: &euro; ${totalePrijs}</p>

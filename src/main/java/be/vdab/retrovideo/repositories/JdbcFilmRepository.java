@@ -25,12 +25,12 @@ public class JdbcFilmRepository implements FilmRepository {
 		this.template=template; 
 	}
 	
-	@Override
-	public List<Genre> findGenres() {
-		
-		return template.query(SELECT_ALL_GENRES, genreRowMapper); 
-		
-	}
+//	@Override
+//	public List<Genre> findGenres() {
+//
+//		return template.query(SELECT_ALL_GENRES, genreRowMapper);
+//
+//	}
 
 	@Override
 	public List<Film> findFilmsByGenre(long id) {
