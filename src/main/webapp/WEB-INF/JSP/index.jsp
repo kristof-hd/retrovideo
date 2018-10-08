@@ -4,6 +4,9 @@
 <!doctype html>
 <html lang='nl'>
 	<head>
+<%-- 		<c:import url='/WEB-INF/JSP/head.jsp'> --%>
+<%-- 			<c:param name='title' value='retrovideo'/> --%>
+<%-- 		</c:import> --%>
 			<title>Retrovideo</title>
 			<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
 			<meta name='viewport' content='width=device-width,initial-scale=1'>

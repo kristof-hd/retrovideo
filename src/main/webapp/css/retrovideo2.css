@@ -1,5 +1,6 @@
 body {
 	background-color: white;
+	font-family: sans-serif; 
 }
 
 a:visited {
@@ -16,9 +17,32 @@ table {
 	border-collapse: collapse;
 }
 
-thead, tfoot {
+thead th:nth-child(1) {
 	background: lightgrey; 
 	color: white;
+	text-align: left; 
+}
+
+thead th:nth-child(2) {
+	background: lightgrey; 
+	color: white;
+	text-align: right; 
+}
+
+thead td:nth-child(3) {
+	text-align: center; 
+}
+
+tbody td:nth-child(1) {
+	text-align: left; 
+}
+
+tbody td:nth-child(2) {
+	text-align: right; 
+}
+
+tbody td:nth-child(3) {
+	text-align: center; 
 }
 
 label span, .fout {
@@ -39,4 +63,16 @@ nav ul {
 
 nav ul li {
 	display: inline;
+}
+
+dd,dt {
+	margin-left: 0;
+}
+
+dt {
+	margin-top: 0.5em;
+}
+
+dd {
+	font-weight: bold;
 }

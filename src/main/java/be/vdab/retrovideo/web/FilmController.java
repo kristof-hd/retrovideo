@@ -16,6 +16,7 @@ import be.vdab.retrovideo.entities.Reservatie;
 import be.vdab.retrovideo.services.FilmService;
 import be.vdab.retrovideo.services.KlantService;
 import be.vdab.retrovideo.services.ReservatieService;
+import be.vdab.retrovideo.valueobjects.TotalePrijs;
 
 @Controller
 @RequestMapping("/")
@@ -33,6 +34,7 @@ public class FilmController {
 	private final KlantService klantService;
 	private final ReservatieService reservatieService;
 	private final Mandje mandje;
+	//@NumberFormat(pattern="0.00") private BigDecimal totalePrijs; 
 	private List<Long> idsMislukteReservaties = new ArrayList<>();
 	private List<String> titelsMislukteReservaties = new ArrayList<>(); 
 	
@@ -52,7 +54,7 @@ public class FilmController {
 	}
 	
 	private BigDecimal berekenTotalePrijs(List<Long> filmIds) {
-		BigDecimal totalePrijs=BigDecimal.ZERO; 
+		BigDecimal totalePrijs=BigDecimal.ZERO;
 		for (long id: filmIds) {
 			totalePrijs=totalePrijs.add(filmService.read(id).get().getPrijs());
 		}
@@ -79,13 +81,15 @@ public class FilmController {
 	ModelAndView toonMandje() {
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
 		modelAndView.addObject("filmsInMandje", maakFilmsVanFilmIds(mandje.getFilmIds()));
-		modelAndView.addObject("totalePrijs", berekenTotalePrijs(mandje.getFilmIds()));
+		modelAndView.addObject("totalePrijs", new TotalePrijs(berekenTotalePrijs(mandje.getFilmIds())));
 		return modelAndView; 
 	}
 	
 	@PostMapping("mandje")
 	String verwijder(long[] verwijderid) {
-		mandje.verwijderFilmIds(verwijderid);
+		if(verwijderid!=null) {
+			mandje.verwijderFilmIds(verwijderid);
+		}
 		return REDIRECT_NA_VERWIJDEREN; 
 	}	
 	

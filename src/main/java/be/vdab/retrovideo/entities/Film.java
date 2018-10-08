@@ -2,6 +2,8 @@ package be.vdab.retrovideo.entities;
 
 import java.math.BigDecimal;
 
+import org.springframework.format.annotation.NumberFormat;
+
 public class Film {
 	
 	private long id;
@@ -9,7 +11,7 @@ public class Film {
 	private String titel;
 	private long voorraad;
 	private long gereserveerd;
-	private BigDecimal prijs;
+	@NumberFormat(pattern="0.00") private BigDecimal prijs;
 	
 	public Film() {
 	}
