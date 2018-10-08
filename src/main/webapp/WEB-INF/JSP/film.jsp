@@ -31,11 +31,10 @@
 		<c:url value='/films/{id}' var='url'/>
 		<c:if test='${film.beschikbaar>0}'>
 			<form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>
-				<form:input path='filmId'/>
+				<form:input path='filmId' id='invoerveld'/>
 				<input type='submit' value='In mandje' id='toevoegknop'>
 			</form:form>
 		</c:if>
-
-
+	<script>document.getElementById('invoerveld').style.display="none";</script>
 	</body>
 </html>

@@ -24,7 +24,7 @@ public class IndexController {
 		this.genreService=genreService;
 		this.filmService=filmService; 
 	}
-	
+
 	@GetMapping
 	ModelAndView index() {
 		List<Genre> genres = genreService.findGenres(); 
@@ -37,6 +37,8 @@ public class IndexController {
 		List<Genre> genres = genreService.findGenres();
 		ModelAndView modelAndView = new ModelAndView("filmsPerGenre", "films", films);
 		modelAndView.addObject("genres", genres);
+		long geselecteerdeId=id; 
+		modelAndView.addObject("geselecteerdeId", geselecteerdeId);
 		return modelAndView;
 	}
 	

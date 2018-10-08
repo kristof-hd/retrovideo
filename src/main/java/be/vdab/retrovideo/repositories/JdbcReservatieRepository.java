@@ -12,6 +12,7 @@ import be.vdab.retrovideo.entities.Reservatie;
 
 @Repository
 public class JdbcReservatieRepository implements ReservatieRepository {
+	
 	private final JdbcTemplate template;
 	private final SimpleJdbcInsert insert; 
 
@@ -28,6 +29,5 @@ public class JdbcReservatieRepository implements ReservatieRepository {
 		kolomWaarden.put("filmId", reservatie.getFilmId());
 		kolomWaarden.put("reservatie", LocalDateTime.now());
 		insert.execute(kolomWaarden);
-		//insert.executeAndReturnKey(kolomWaarden); 
 	}
 }

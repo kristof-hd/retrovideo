@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.entities;
 
 public class Klant {
+	
 	private long id;
 	private String familienaam;
 	private String voornaam;

@@ -1,8 +1,10 @@
 package be.vdab.retrovideo.entities;
 
 public class Genre {
+	
 	private long id;
 	private String naam;
+	
 	public long getId() {
 		return id;
 	}

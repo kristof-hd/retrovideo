@@ -21,8 +21,6 @@ public class JdbcGenreRepository implements GenreRepository {
 	
 	@Override
 	public List<Genre> findGenres() {
-		
 		return template.query(SELECT_ALL_GENRES, genreRowMapper); 
-		
 	}
 }

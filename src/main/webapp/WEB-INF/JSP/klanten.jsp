@@ -16,12 +16,12 @@
 
 		<form:form action='${url}' modelAttribute='klantenZoekenForm' method='get'>
 			<form:label path='familienaamBevat'>Familienaam bevat: <form:errors path='familienaamBevat'/></form:label>
-			<form:input path='familienaamBevat' autofocus='autofocus'/>
+			<form:input path='familienaamBevat' autofocus='autofocus' required='required'/>
 			<input type='submit' value='Zoeken'> <form:errors cssClass='fout'/> 
 		</form:form>
 		<br>
 		<c:if test='${not empty klanten}'>
-			<table>
+			<table border="1">
 				<thead>
 					<tr>
 						<th>Naam</th>

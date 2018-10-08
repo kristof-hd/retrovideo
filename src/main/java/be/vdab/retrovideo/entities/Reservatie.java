@@ -2,16 +2,24 @@ package be.vdab.retrovideo.entities;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Reservatie {
 	private long klantId;
 	private long filmId;
-	private LocalDateTime reservatie;
+	@DateTimeFormat(style="SS") private LocalDateTime reservatie;
 
 	public Reservatie(long klantId, long filmId) {
 		this.klantId=klantId;
 		this.filmId=filmId; 		
 	}
-	
+
+	public Reservatie(long klantId, long filmId, LocalDateTime reservatie) {
+		this.klantId=klantId;
+		this.filmId=filmId;
+		this.reservatie=reservatie;
+	}
+		
 	public long getKlantId() {
 		return klantId;
 	}

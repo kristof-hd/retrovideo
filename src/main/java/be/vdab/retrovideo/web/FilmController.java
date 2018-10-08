@@ -32,7 +32,9 @@ public class FilmController {
 	private final FilmService filmService; 
 	private final KlantService klantService;
 	private final ReservatieService reservatieService;
-	private final Mandje mandje; 
+	private final Mandje mandje;
+	private List<Long> idsMislukteReservaties = new ArrayList<>();
+	private List<String> titelsMislukteReservaties = new ArrayList<>(); 
 	
 	public FilmController(Mandje mandje, FilmService filmService, KlantService klantService, ReservatieService reservatieService) {
 		this.mandje=mandje; 
@@ -81,12 +83,6 @@ public class FilmController {
 		return modelAndView; 
 	}
 	
-//	@PostMapping("mandje")
-//	String verwijderFilmId(long verwijderid) {
-//		mandje.verwijderFilmId(verwijderid);
-//		return REDIRECT_NA_VERWIJDEREN; 
-//	}
-
 	@PostMapping("mandje")
 	String verwijder(long[] verwijderid) {
 		mandje.verwijderFilmIds(verwijderid);
@@ -102,7 +98,6 @@ public class FilmController {
 		ReservatieForm reservatieForm = new ReservatieForm(); 
 		reservatieForm.setKlantId(id);
 		reservatieForm.setFilmIds(mandje.getFilmIds());
-		//modelAndView.addObject("getal", reservatie.getKlantId()); 
 		modelAndView.addObject(reservatieForm); 
 		return modelAndView;  
 	}
@@ -110,16 +105,25 @@ public class FilmController {
 	@PostMapping("bevestigen/{id}")
 	ModelAndView bevestigen(ReservatieForm reservatieForm) {
 		for (long filmId: mandje.getFilmIds()) {
-			Reservatie reservatie = new Reservatie(reservatieForm.getKlantId(), filmId);
-			reservatieService.create(reservatie);
-			Film film = filmService.read(filmId).get();
-			filmService.update(film); 
+			if(filmService.read(filmId).get().getBeschikbaar()>0) {
+				Reservatie reservatie = new Reservatie(reservatieForm.getKlantId(), filmId);
+				reservatieService.create(reservatie);
+				Film film = filmService.read(filmId).get();
+				filmService.update(film);
+			}
+			else {
+				idsMislukteReservaties.add(filmId); 
+			}
+		}
+		for(long id: idsMislukteReservaties) {
+			String titel = filmService.read(id).get().getTitel();
+			titelsMislukteReservaties.add(titel); 
 		}
 		return new ModelAndView(REDIRECT_NA_BEVESTIGEN); 
 	}
 	
 	@GetMapping("rapport") 
 	ModelAndView rapport() {
-		return new ModelAndView(RAPPORT_VIEW);
+		return new ModelAndView(RAPPORT_VIEW, "titelsMislukteReservaties", titelsMislukteReservaties);
 	}
 }

@@ -1,0 +1,1 @@
+insert into klanten(familienaam, voornaam, straatNummer, postcode, gemeente) values ('Janssen', 'Jan', 'Louizalaan 100', 1000, 'Brussel'); 

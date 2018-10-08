@@ -3,8 +3,10 @@ package be.vdab.retrovideo.web;
 import java.util.List;
 
 public class ReservatieForm {
+	
 	private long klantId;
 	private List<Long> filmIds;
+	
 	public long getKlantId() {
 		return klantId;
 	}

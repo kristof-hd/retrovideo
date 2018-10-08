@@ -3,13 +3,14 @@ package be.vdab.retrovideo.entities;
 import java.math.BigDecimal;
 
 public class Film {
-	long id;
-	Genre genre;
-	String titel;
-	long voorraad;
-	long gereserveerd;
-	BigDecimal prijs;
-
+	
+	private long id;
+	private Genre genre;
+	private String titel;
+	private long voorraad;
+	private long gereserveerd;
+	private BigDecimal prijs;
+	
 	public Film() {
 	}
 	
@@ -25,7 +26,16 @@ public class Film {
 		this.gereserveerd=gereserveerd;
 		this.prijs=prijs; 
 	}
-	
+
+	public Film(long id, Genre genre, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
+		this.id=id;
+		this.genre=genre;
+		this.titel=titel; 
+		this.voorraad=voorraad;
+		this.gereserveerd=gereserveerd;
+		this.prijs=prijs; 
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -6,12 +6,19 @@ a:visited {
 	text-decoration: none; 
 }
 
+.geselecteerdGenre{
+	background-color: blue;
+	padding: 0.25em;
+	color: white;	
+}
+
 table {
 	border-collapse: collapse;
 }
 
 thead, tfoot {
 	background: lightgrey; 
+	color: white;
 }
 
 label span, .fout {

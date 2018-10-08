@@ -12,6 +12,7 @@ import be.vdab.retrovideo.repositories.GenreRepository;
 @Service
 @Transactional(readOnly=true, isolation=Isolation.READ_COMMITTED)
 public class DefaultGenreService implements GenreService {
+	
 	private GenreRepository genreRepository; 
 	
 	public DefaultGenreService(GenreRepository genreRepository) {
