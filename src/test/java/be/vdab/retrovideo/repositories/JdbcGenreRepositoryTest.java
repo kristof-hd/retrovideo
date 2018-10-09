@@ -23,9 +23,9 @@ import be.vdab.retrovideo.entities.Genre;
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 @Import(JdbcGenreRepository.class)
 @Sql("/insertGenre.sql")
-
 public class JdbcGenreRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
-		private static final String GENRES="genres";
+
+	private static final String GENRES="genres";
 		@Autowired
 		private JdbcGenreRepository repository;
 		

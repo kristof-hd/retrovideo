@@ -21,7 +21,7 @@ public class KlantController {
 	private static final String KLANTEN_VIEW="klanten"; 
 	
 	public KlantController(KlantService klantService) {
-		this.klantService=klantService; 
+		this.klantService = klantService; 
 	}
 	
 	@GetMapping

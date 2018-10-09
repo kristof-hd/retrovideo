@@ -41,6 +41,5 @@ public class IndexController {
 		modelAndView.addObject("geselecteerdeId", geselecteerdeId);
 		return modelAndView;
 	}
-	
-	
+		
 }

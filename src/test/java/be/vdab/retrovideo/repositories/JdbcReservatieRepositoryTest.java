@@ -23,16 +23,17 @@ import be.vdab.retrovideo.entities.Reservatie;
 @Import(JdbcReservatieRepository.class)
 @Sql("/insertReservatie.sql")
 public class JdbcReservatieRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+	
 	private static final String RESERVATIES = "reservaties"; 
 
 	@Autowired private JdbcReservatieRepository repository;
 
 	@Test
 	public void create() {
-	int aantalReservaties=super.countRowsInTable(RESERVATIES); 
-	Reservatie reservatie = new Reservatie(1, 2, LocalDateTime.now()); 
-	repository.create(reservatie); 
-	assertEquals(aantalReservaties+1, this.countRowsInTable(RESERVATIES));  
+		int aantalReservaties=super.countRowsInTable(RESERVATIES); 
+		Reservatie reservatie = new Reservatie(1, 2, LocalDateTime.now()); 
+		repository.create(reservatie); 
+		assertEquals(aantalReservaties+1, this.countRowsInTable(RESERVATIES));  
 	}
 
 }

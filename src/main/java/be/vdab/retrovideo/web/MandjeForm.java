@@ -1,6 +1,7 @@
 package be.vdab.retrovideo.web;
 
 public class MandjeForm {
+	
 	private long filmId;
 
 	public long getFilmId() {

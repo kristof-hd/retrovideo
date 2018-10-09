@@ -6,10 +6,7 @@
 <html lang='nl'>
 	<head>
  		<vdab:head title='Retrovideo'/>
-<%-- 		<c:import url='/WEB-INF/JSP/head.jsp'>
-			<c:param name='title' value='Retrovideo'/>
-		</c:import>
- --%>	</head>
+	</head>
 	<body>
 		<vdab:menu/>
 		<h1>Retrovideo</h1>

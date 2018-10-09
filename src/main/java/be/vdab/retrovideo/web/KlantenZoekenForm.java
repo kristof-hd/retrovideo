@@ -3,6 +3,7 @@ package be.vdab.retrovideo.web;
 import javax.validation.constraints.NotBlank;
 
 public class KlantenZoekenForm {
+	
 	@NotBlank private String familienaamBevat;
 
 	public String getFamilienaamBevat() {

@@ -34,15 +34,14 @@ public class FilmController {
 	private final KlantService klantService;
 	private final ReservatieService reservatieService;
 	private final Mandje mandje;
-	//@NumberFormat(pattern="0.00") private BigDecimal totalePrijs; 
 	private List<Long> idsMislukteReservaties = new ArrayList<>();
 	private List<String> titelsMislukteReservaties = new ArrayList<>(); 
 	
 	public FilmController(Mandje mandje, FilmService filmService, KlantService klantService, ReservatieService reservatieService) {
-		this.mandje=mandje; 
-		this.filmService=filmService; 
-		this.klantService=klantService;
-		this.reservatieService=reservatieService;
+		this.mandje = mandje; 
+		this.filmService = filmService; 
+		this.klantService = klantService;
+		this.reservatieService = reservatieService;
 	}
 	
 	private List<Film> maakFilmsVanFilmIds(List<Long> filmIds) {
@@ -56,7 +55,7 @@ public class FilmController {
 	private BigDecimal berekenTotalePrijs(List<Long> filmIds) {
 		BigDecimal totalePrijs=BigDecimal.ZERO;
 		for (long id: filmIds) {
-			totalePrijs=totalePrijs.add(filmService.read(id).get().getPrijs());
+			totalePrijs = totalePrijs.add(filmService.read(id).get().getPrijs());
 		}
 		return totalePrijs; 
 	}
@@ -66,7 +65,7 @@ public class FilmController {
 		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
 		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
 		if(!mandje.getFilmIds().contains(id)) {		
-			MandjeForm form=new MandjeForm(); 
+			MandjeForm form = new MandjeForm(); 
 			form.setFilmId(id); 
 			modelAndView.addObject(form);
 		}
@@ -132,4 +131,5 @@ public class FilmController {
 	ModelAndView rapport() {
 		return new ModelAndView(RAPPORT_VIEW, "titelsMislukteReservaties", titelsMislukteReservaties);
 	}
+
 }
