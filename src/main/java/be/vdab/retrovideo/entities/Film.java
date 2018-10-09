@@ -7,7 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 public class Film {
 	
 	private long id;
-	private Genre genre;
+	private long genreId;
 	private String titel;
 	private long voorraad;
 	private long gereserveerd;
@@ -16,22 +16,22 @@ public class Film {
 	public Film() {
 	}
 	
-	public Film(long id, String titel) {
-		this.id=id;
-		this.titel=titel; 
-	}
+//	public Film(long id, String titel) {
+//		this.id=id;
+//		this.titel=titel; 
+//	}
 
-	public Film(long id, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
-		this.id=id;
-		this.titel=titel; 
-		this.voorraad=voorraad;
-		this.gereserveerd=gereserveerd;
-		this.prijs=prijs; 
-	}
+//	public Film(long id, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
+//		this.id=id;
+//		this.titel=titel; 
+//		this.voorraad=voorraad;
+//		this.gereserveerd=gereserveerd;
+//		this.prijs=prijs; 
+//	}
 
-	public Film(long id, Genre genre, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
+	public Film(long id, long genreId, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
 		this.id=id;
-		this.genre=genre;
+		this.genreId=genreId;
 		this.titel=titel; 
 		this.voorraad=voorraad;
 		this.gereserveerd=gereserveerd;
@@ -46,12 +46,12 @@ public class Film {
 		this.id = id;
 	}
 
-	public Genre getGenre() {
-		return genre;
+	public long getGenreId() {
+		return genreId;
 	}
 
-	public void setGenre(Genre genre) {
-		this.genre = genre;
+	public void setGenreId(long genreId) {
+		this.genreId = genreId;
 	}
 
 	public String getTitel() {

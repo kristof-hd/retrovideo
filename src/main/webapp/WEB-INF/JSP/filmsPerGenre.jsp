@@ -1,19 +1,14 @@
 <%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%> 
 <%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
+<%@taglib prefix='vdab' uri='http://vdab.be/tags'%>
 <!doctype html>
 <html lang='nl'>
 	<head>
- 			<title>Retrovideo</title>
-			<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
-			<meta name='viewport' content='width=device-width,initial-scale=1'>
-			<link rel='stylesheet' href='<c:url value="/css/retrovideo2.css"/>'>
-<%-- 		<c:import url='/WEB-INF/JSP/head.jsp'> --%>
-<%-- 			<c:param name='title' value='retrovideo'/> --%>
-<%-- 		</c:import> --%>
+		<vdab:head title='Retrovideo'/>
 	</head>
 	<body>
-		<c:import url='/WEB-INF/JSP/menu.jsp'/>
+		<vdab:menu/>
 		<h1>Retrovideo</h1>
 		<%-- id van het geselecteerde genre: ${geselecteerdeId} --%>
 		<nav>
@@ -40,7 +35,6 @@
 						<spring:param name='id' value='${film.id}'/>
 					</spring:url>
 					<c:choose> 
-
 						<c:when test='${film.gereserveerd<film.voorraad}'> 
 							<a href='${url}'>
 								<img src='<c:url value="/images/${film.id}.jpg"/>' title='${film.titel} : reservatie mogelijk'>					
@@ -56,7 +50,6 @@
 				
 			</ul>
 		</c:if>
-
 	</body>
 </html>
 

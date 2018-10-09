@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringRunner;
 
 import be.vdab.retrovideo.entities.Film;
-import be.vdab.retrovideo.entities.Genre;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 
 @RunWith(SpringRunner.class)
@@ -40,8 +39,11 @@ public class JdbcFilmRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void findFilmsByGenre() {
 		List<Film> films = repository.findFilmsByGenre(1);
+		String vorigeTitel="";
 		for (Film film : films) {
-			assertTrue(film.getGenre().getId()==1);
+			assertEquals(1, film.getGenreId());
+			assertTrue(vorigeTitel.compareTo(film.getTitel())<=0);
+			vorigeTitel=film.getTitel(); 
 		}
 		assertEquals(super.countRowsInTableWhere(FILMS, "genreid=1"), films.size());
 	}
@@ -59,14 +61,14 @@ public class JdbcFilmRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void update() {
 		long id = idVanTestFilm();
-		Film film = new Film(id, new Genre(1, "testGenre"), "test", 1, 0, BigDecimal.valueOf(4));
+		Film film = new Film(id, 1, "test", 1, 0, BigDecimal.valueOf(4));
 		repository.update(film);
 		assertEquals(1, super.jdbcTemplate.queryForObject("select gereserveerd from films where id=?", Long.class, id), 0);
 	}
 
 	@Test(expected = FilmNietGevondenException.class)
 	public void updateOnbestaandeFilm() {
-		repository.update(new Film(-1, new Genre(1, "testGenre"), "test", 1, 0, BigDecimal.valueOf(4)));
+		repository.update(new Film(-1, 1, "test", 1, 0, BigDecimal.valueOf(4)));
 	}
 
 }

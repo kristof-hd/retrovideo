@@ -65,9 +65,11 @@ public class FilmController {
 	ModelAndView film(@PathVariable long id) {
 		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
 		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
-		MandjeForm form=new MandjeForm(); 
-		form.setFilmId(id); 
-		modelAndView.addObject(form); 
+		if(!mandje.getFilmIds().contains(id)) {		
+			MandjeForm form=new MandjeForm(); 
+			form.setFilmId(id); 
+			modelAndView.addObject(form);
+		}
 		return modelAndView; 
 	}
 	

@@ -15,10 +15,10 @@ import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 public class JdbcFilmRepository implements FilmRepository {
 
 	private final JdbcTemplate template;
-	private static final String SELECT_FILMS_BY_GENRE="select id, titel, voorraad, gereserveerd, prijs from films where genreid=?"; 
-	private static final String READ = "select id, titel, voorraad, gereserveerd, prijs from films where id=?"; 
+	private static final String SELECT_FILMS_BY_GENRE="select id, genreid, titel, voorraad, gereserveerd, prijs from films where genreid=? order by titel"; 
+	private static final String READ = "select id, genreid, titel, voorraad, gereserveerd, prijs from films where id=?"; 
 	private static final String UPDATE_FILM="update films set gereserveerd=gereserveerd+1 where id=?"; 
-	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getString("titel"), resultSet.getInt("voorraad"), resultSet.getInt("gereserveerd"), resultSet.getBigDecimal("prijs"));
+	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getLong("genreid"), resultSet.getString("titel"), resultSet.getInt("voorraad"), resultSet.getInt("gereserveerd"), resultSet.getBigDecimal("prijs"));
 
 	JdbcFilmRepository(JdbcTemplate template) {
 		this.template=template; 
@@ -32,7 +32,7 @@ public class JdbcFilmRepository implements FilmRepository {
 	@Override
 	public Optional<Film> read(long id) {
 		try {
-			return Optional.of(template.queryForObject(READ,  filmRowMapper, id));
+			return Optional.of(template.queryForObject(READ, filmRowMapper, id));
 		}
 		catch (IncorrectResultSizeDataAccessException ex) {
 			return Optional.empty(); 

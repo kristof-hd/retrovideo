@@ -2,21 +2,15 @@
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%> 
 <%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
+<%@taglib prefix='vdab' uri='http://vdab.be/tags'%>
 <!doctype html>
 <html lang='nl'>
 	<head>
-		<title>Retrovideo</title>
-		<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
-		<meta name='viewport' content='width=device-width,initial-scale=1'>
-		<link rel='stylesheet' href='<c:url value="/css/retrovideo2.css"/>'>
-<%-- 		<c:import url='/WEB-INF/JSP/head.jsp'> --%>
-<%-- 			<c:param name='title' value='retrovideo'/> --%>
-<%-- 		</c:import> --%>
+		<vdab:head title='Retrovideo'/>
 	</head>
 	<body>
-		<c:import url='/WEB-INF/JSP/menuUitgebreid.jsp'/>
+		<vdab:menuUitgebreid/>
 		<h1>Klanten</h1>
-
 		<form:form action='${url}' modelAttribute='klantenZoekenForm' method='get'>
 			<form:label path='familienaamBevat'>Familienaam bevat: <form:errors path='familienaamBevat'/></form:label>
 			<form:input path='familienaamBevat' autofocus='autofocus' required='required'/>
@@ -24,11 +18,11 @@
 		</form:form>
 		<br>
 		<c:if test='${not empty klanten}'>
-			<table border="1">
+			<table border="1" class="klanten">
 				<thead>
 					<tr>
 						<th>Naam</th>
-						<th>Straat + huisnummer</th>
+						<th>Straat - Huisnummer</th>
 						<th>Postcode</th>
 						<th>Gemeente</th>
 					</tr>

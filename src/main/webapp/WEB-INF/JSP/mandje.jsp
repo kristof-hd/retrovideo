@@ -2,32 +2,27 @@
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
+<%@taglib prefix='vdab' uri='http://vdab.be/tags'%>
 <!doctype html>
 <html lang='nl'>
 	<head>
-		<title>Retrovideo</title>
-		<link rel='icon' href='<c:url value="/images/retrovideo.ico"/>' type='image/x-icon'>
-		<meta name='viewport' content='width=device-width,initial-scale=1'>
-		<link rel='stylesheet' href='<c:url value="/css/retrovideo2.css"/>'>
-<%-- 		<c:import url='/WEB-INF/JSP/head.jsp'> --%>
-<%-- 			<c:param name='title' value='retrovideo'/> --%>
-<%-- 		</c:import> --%>
+		<vdab:head title='Retrovideo'/>
 	</head>
 	<body>
 		<c:choose>
 			<c:when test='${empty filmsInMandje}'>
-				<c:import url='/WEB-INF/JSP/menu.jsp'/> 
+				<vdab:menu/> 
 				<p>Uw mandje is momenteel ledig.</p>
 			</c:when>
 			<c:otherwise>
-				<c:import url='/WEB-INF/JSP/menuUitgebreid.jsp'/>
+				<vdab:menuUitgebreid/>
 				<h2>Mandje</h2>
 					<c:url value='mandje' var='url'/>
 					<form:form action='${url}' method='post'>
 						<table border="1">
 							<thead>
 								<tr>
-									<th>Titel</th>
+									<th>Film</th>
 									<th>Prijs</th>
 									<th><input type='submit' value='Verwijderen'></th>
 								</tr>
