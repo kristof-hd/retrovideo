@@ -65,24 +65,44 @@ public class FilmController {
 		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
 		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
 		if(!mandje.getFilmIds().contains(id)) {		
-			MandjeForm form = new MandjeForm(); 
-			form.setFilmId(id); 
-			modelAndView.addObject(form);
+			boolean inMandje=false;
+			//			MandjeForm form = new MandjeForm(); 
+			//			form.setFilmId(id); 
+			modelAndView.addObject(inMandje);
 		}
 		return modelAndView; 
 	}
+
+//	@GetMapping("films/{id}")
+//	ModelAndView film(@PathVariable long id) {
+//		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
+//		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
+//		if(!mandje.getFilmIds().contains(id)) {		
+//			MandjeForm form = new MandjeForm(); 
+//			form.setFilmId(id); 
+//			modelAndView.addObject(form);
+//		}
+//		return modelAndView; 
+//	}
 	
+
 	@PostMapping("films/{id}")
-	String voegFilmToeAanMandje(MandjeForm form) {
-		mandje.addFilmId(form.getFilmId());
+	String voegFilmToeAanMandje(@PathVariable long id) {
+		mandje.addFilmId(id);
 		return REDIRECT_NA_TOEVOEGEN; 
 	}
+		
+//	@PostMapping("films/{id}")
+//	String voegFilmToeAanMandje(MandjeForm form) {
+//		mandje.addFilmId(form.getFilmId());
+//		return REDIRECT_NA_TOEVOEGEN; 
+//	}
 	
 	@GetMapping("mandje")
 	ModelAndView toonMandje() {
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
 		modelAndView.addObject("filmsInMandje", maakFilmsVanFilmIds(mandje.getFilmIds()));
-		modelAndView.addObject("totalePrijs", new TotalePrijs(berekenTotalePrijs(mandje.getFilmIds())));
+		//modelAndView.addObject("totalePrijs", new TotalePrijs(berekenTotalePrijs(mandje.getFilmIds())));
 		return modelAndView; 
 	}
 	
@@ -100,19 +120,28 @@ public class FilmController {
 		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW); 
 		klantService.readKlant(id).ifPresent(klant -> modelAndView.addObject(klant));
 		modelAndView.addObject("aantalArtikelsInMandje", mandje.telAantalArtikelsInMandje()); 
-		ReservatieForm reservatieForm = new ReservatieForm(); 
-		reservatieForm.setKlantId(id);
-		reservatieForm.setFilmIds(mandje.getFilmIds());
-		modelAndView.addObject(reservatieForm); 
 		return modelAndView;  
 	}
-	
+
+//	@GetMapping("bevestigen/{id}")
+//	ModelAndView bevestigen(@PathVariable long id) {
+//		mandje.setKlantId(id);
+//		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW); 
+//		klantService.readKlant(id).ifPresent(klant -> modelAndView.addObject(klant));
+//		modelAndView.addObject("aantalArtikelsInMandje", mandje.telAantalArtikelsInMandje()); 
+//		ReservatieForm reservatieForm = new ReservatieForm(); 
+//		reservatieForm.setKlantId(id);
+//		reservatieForm.setFilmIds(mandje.getFilmIds());
+//		modelAndView.addObject(reservatieForm); 
+//		return modelAndView;  
+//	}	
+
 	@PostMapping("bevestigen/{id}")
-	ModelAndView bevestigen(ReservatieForm reservatieForm) {
+	ModelAndView bevestig(@PathVariable long id) {
 		for (long filmId: mandje.getFilmIds()) {
 			if(filmService.read(filmId).get().getBeschikbaar()>0) {
-				Reservatie reservatie = new Reservatie(reservatieForm.getKlantId(), filmId);
-				reservatieService.create(reservatie);
+				Reservatie reservatie = new Reservatie(id, filmId);
+				reservatieService.create(reservatie);  // TODO deze method moet zowel toevoegen aan reservaties als wijzigen in flim
 				Film film = filmService.read(filmId).get();
 				filmService.update(film);
 			}
@@ -120,12 +149,32 @@ public class FilmController {
 				idsMislukteReservaties.add(filmId); 
 			}
 		}
-		for(long id: idsMislukteReservaties) {
-			String titel = filmService.read(id).get().getTitel();
+		for(long idMislukt: idsMislukteReservaties) {
+			String titel = filmService.read(idMislukt).get().getTitel();
 			titelsMislukteReservaties.add(titel); 
 		}
 		return new ModelAndView(REDIRECT_NA_BEVESTIGEN); 
-	}
+	}	
+	
+//	@PostMapping("bevestigen/{id}")
+//	ModelAndView bevestigen(ReservatieForm reservatieForm) {
+//		for (long filmId: mandje.getFilmIds()) {
+//			if(filmService.read(filmId).get().getBeschikbaar()>0) {
+//				Reservatie reservatie = new Reservatie(reservatieForm.getKlantId(), filmId);
+//				reservatieService.create(reservatie);  // TODO deze method moet zowel toevoegen aan reservaties als wijzigen in flim
+//				Film film = filmService.read(filmId).get();
+//				filmService.update(film);
+//			}
+//			else {
+//				idsMislukteReservaties.add(filmId); 
+//			}
+//		}
+//		for(long id: idsMislukteReservaties) {
+//			String titel = filmService.read(id).get().getTitel();
+//			titelsMislukteReservaties.add(titel); 
+//		}
+//		return new ModelAndView(REDIRECT_NA_BEVESTIGEN); 
+//	}
 	
 	@GetMapping("rapport") 
 	ModelAndView rapport() {

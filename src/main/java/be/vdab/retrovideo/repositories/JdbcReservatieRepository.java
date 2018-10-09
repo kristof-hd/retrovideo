@@ -1,6 +1,5 @@
 package be.vdab.retrovideo.repositories;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,11 +12,9 @@ import be.vdab.retrovideo.entities.Reservatie;
 @Repository
 public class JdbcReservatieRepository implements ReservatieRepository {
 	
-	private final JdbcTemplate template;
 	private final SimpleJdbcInsert insert; 
 
 	JdbcReservatieRepository(JdbcTemplate template) {
-		this.template = template;
 		this.insert=new SimpleJdbcInsert(template);
 		insert.withTableName("reservaties");
 	}
@@ -27,7 +24,7 @@ public class JdbcReservatieRepository implements ReservatieRepository {
 		Map<String, Object> kolomWaarden = new HashMap<>(); 
 		kolomWaarden.put("klantId", reservatie.getKlantId()); 
 		kolomWaarden.put("filmId", reservatie.getFilmId());
-		kolomWaarden.put("reservatie", LocalDateTime.now());
+		kolomWaarden.put("reservatie", reservatie.getReservatie());
 		insert.execute(kolomWaarden);
 	}
 }

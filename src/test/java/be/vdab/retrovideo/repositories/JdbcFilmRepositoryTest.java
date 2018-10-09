@@ -63,7 +63,7 @@ public class JdbcFilmRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 		long id = idVanTestFilm();
 		Film film = new Film(id, 1, "test", 1, 0, BigDecimal.valueOf(4));
 		repository.update(film);
-		assertEquals(1, super.jdbcTemplate.queryForObject("select gereserveerd from films where id=?", Long.class, id), 0);
+		assertEquals(Long.valueOf(1L), super.jdbcTemplate.queryForObject("select gereserveerd from films where id=?", Long.class, id));
 	}
 
 	@Test(expected = FilmNietGevondenException.class)

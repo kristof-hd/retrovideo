@@ -12,11 +12,15 @@
 		<vdab:menuUitgebreid/>
 		<h1>Bevestigen</h1>  
 		<p>${aantalArtikelsInMandje} film(s) voor ${klant.voornaam} ${klant.familienaam}</p>
-		<c:url value='/bevestigen/{id}' var='url'/>
-		<form:form action='${url}' modelAttribute='reservatieForm' method='post'>
-			<form:input path='klantId' id='invoerveld'/>
+		<spring:url value='/bevestigen/{id}' var='url'>
+			<spring:param name='id' value='${klant.id}'/>
+		</spring:url>
+<%-- 		<form:form action='${url}' modelAttribute='reservatieForm' method='post'> --%>
+		<form:form action='${url}' method='post'>
 			<input type='submit' value='Bevestigen' id='toevoegknop'>
 		</form:form>
-	<script>document.getElementById('invoerveld').style.display="none";</script>
+<!-- 	<script>document.getElementById('invoerveld').style.display="none";</script> -->
 	</body>
 </html>
+
+

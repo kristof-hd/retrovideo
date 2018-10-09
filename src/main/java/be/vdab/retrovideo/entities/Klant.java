@@ -1,6 +1,6 @@
 package be.vdab.retrovideo.entities;
 
-public class Klant {
+public class Klant {  // TODO setters weg
 	
 	private long id;
 	private String familienaam;

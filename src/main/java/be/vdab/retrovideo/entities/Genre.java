@@ -1,6 +1,6 @@
 package be.vdab.retrovideo.entities;
 
-public class Genre {
+public class Genre {  // TODO setters weg, default constructor weg
 
 	public Genre(){
 	}

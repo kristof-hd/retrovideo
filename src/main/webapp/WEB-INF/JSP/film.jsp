@@ -27,15 +27,21 @@
 				<dd>${film.beschikbaar}</dd>
 			</dl>
 		</c:if>
-		<c:url value='/films/{id}' var='url'/>
-		<c:if test='${film.beschikbaar>0 && not empty mandjeForm}'>
-			<form:form action='${url}' modelAttribute='mandjeForm' method='post' id='mandjeform'>
-				<form:input path='filmId' id='invoerveld'/>
+		<%-- 		<c:url value='/films/{id}' var='url'/> --%>
+		
+		<spring:url value='/films/{id}' var='url'>
+			<spring:param name='id' value='${film.id}'/>
+		</spring:url>		
+		
+<%-- 		<c:if test='${film.beschikbaar>0 && not empty mandjeForm}'> --%>
+		<c:if test='${film.beschikbaar>0 && not inMandje}'>
+			<form:form action='${url}' method='post' id='mandjeform'>
+<%-- 				<form:input path='filmId' id='invoerveld'/> --%>
 				<input type='submit' value='In mandje' id='toevoegknop'>
 			</form:form>
 		</c:if>
-	<script>
-		document.getElementById('invoerveld').style.display="none";</script>
+<!-- 	<script> -->
+<!-- 		document.getElementById('invoerveld').style.display="none";</script> -->
 
 	</body>
 </html>

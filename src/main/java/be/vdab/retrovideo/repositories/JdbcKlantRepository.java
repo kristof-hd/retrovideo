@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import be.vdab.retrovideo.entities.Klant;
 
 @Repository
-public class JdbcKlantRepository implements KlantRepository {
+class JdbcKlantRepository implements KlantRepository {
 	private final JdbcTemplate template;
 	
 	JdbcKlantRepository(JdbcTemplate template) {

@@ -39,7 +39,9 @@
 								</c:forEach>
 								<tr>
 									<td>Totaal:</td>
-									<td>&euro; <spring:eval expression='totalePrijs.waarde'/></td>
+									<td>
+<%-- 										&euro; <spring:eval expression='totalePrijs.waarde'/> --%>
+									</td>
 									<td></td>
 								</tr>
 							</tbody>

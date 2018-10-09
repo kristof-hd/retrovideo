@@ -45,15 +45,15 @@ public class JdbcKlantRepositoryTest extends AbstractTransactionalJUnit4SpringCo
 
 	@Test
 	public void findByFamilienaamBevat() {
-		List<Klant> klanten = repository.findByFamilienaamBevat("co");
+		List<Klant> klanten = repository.findByFamilienaamBevat("ans");
 		String vorigeNaam = "";
 		for (Klant klant : klanten) {
-			assertTrue(klant.getFamilienaam().toLowerCase().contains("co"));
+			assertTrue(klant.getFamilienaam().toLowerCase().contains("ans"));
 			assertTrue(vorigeNaam.compareToIgnoreCase(klant.getFamilienaam()) <= 0);
 			vorigeNaam = klant.getFamilienaam();
 		}
 		long aantalKlanten = super.jdbcTemplate.queryForObject(
-				"select count(*) from klanten where familienaam like '%co%' order by familienaam", Long.class);
+				"select count(*) from klanten where familienaam like '%ans%' order by familienaam", Long.class);
 		assertEquals(aantalKlanten, klanten.size());
 	}
 
