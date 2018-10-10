@@ -1,8 +1,12 @@
 package be.vdab.retrovideo.web;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,71 +24,33 @@ import be.vdab.retrovideo.valueobjects.TotalePrijs;
 
 @Controller
 @RequestMapping("/")
-public class FilmController {
+class FilmController {
 
 	private static final String FILM_VIEW="film";
 	private static final String MANDJE_VIEW="mandje";
 	private static final String BEVESTIGEN_VIEW="bevestigen";
-	private static final String RAPPORT_VIEW="rapport";
 	private static final String REDIRECT_NA_TOEVOEGEN="redirect:/mandje";
 	private static final String REDIRECT_NA_VERWIJDEREN="redirect:/mandje";
-	private static final String REDIRECT_NA_BEVESTIGEN="redirect:/rapport"; 
 	
 	private final FilmService filmService; 
 	private final KlantService klantService;
-	private final ReservatieService reservatieService;
+	private final ReservatieService reservatieService; 
 	private final Mandje mandje;
-	private List<Long> idsMislukteReservaties = new ArrayList<>();
-	private List<String> titelsMislukteReservaties = new ArrayList<>(); 
 	
-	public FilmController(Mandje mandje, FilmService filmService, KlantService klantService, ReservatieService reservatieService) {
+	FilmController(Mandje mandje, FilmService filmService, KlantService klantService, ReservatieService reservatieService) {
 		this.mandje = mandje; 
 		this.filmService = filmService; 
 		this.klantService = klantService;
-		this.reservatieService = reservatieService;
+		this.reservatieService=reservatieService;
 	}
-	
-	private List<Film> maakFilmsVanFilmIds(List<Long> filmIds) {
-		List<Film> films = new ArrayList<>(filmIds.size());
-		for (long id: filmIds) {
-			filmService.read(id).ifPresent(film -> films.add(film));
-		}
-		return films; 
-	}
-	
-	private BigDecimal berekenTotalePrijs(List<Long> filmIds) {
-		BigDecimal totalePrijs=BigDecimal.ZERO;
-		for (long id: filmIds) {
-			totalePrijs = totalePrijs.add(filmService.read(id).get().getPrijs());
-		}
-		return totalePrijs; 
-	}
-	
+
 	@GetMapping("films/{id}")
 	ModelAndView film(@PathVariable long id) {
 		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
 		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
-		if(!mandje.getFilmIds().contains(id)) {		
-			boolean inMandje=false;
-			//			MandjeForm form = new MandjeForm(); 
-			//			form.setFilmId(id); 
-			modelAndView.addObject(inMandje);
-		}
+		modelAndView.addObject("inMandje", mandje.bevat(id));
 		return modelAndView; 
 	}
-
-//	@GetMapping("films/{id}")
-//	ModelAndView film(@PathVariable long id) {
-//		ModelAndView modelAndView = new ModelAndView(FILM_VIEW); 
-//		filmService.read(id).ifPresent(film -> modelAndView.addObject(film));
-//		if(!mandje.getFilmIds().contains(id)) {		
-//			MandjeForm form = new MandjeForm(); 
-//			form.setFilmId(id); 
-//			modelAndView.addObject(form);
-//		}
-//		return modelAndView; 
-//	}
-	
 
 	@PostMapping("films/{id}")
 	String voegFilmToeAanMandje(@PathVariable long id) {
@@ -92,20 +58,26 @@ public class FilmController {
 		return REDIRECT_NA_TOEVOEGEN; 
 	}
 		
-//	@PostMapping("films/{id}")
-//	String voegFilmToeAanMandje(MandjeForm form) {
-//		mandje.addFilmId(form.getFilmId());
-//		return REDIRECT_NA_TOEVOEGEN; 
-//	}
-	
 	@GetMapping("mandje")
 	ModelAndView toonMandje() {
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
-		modelAndView.addObject("filmsInMandje", maakFilmsVanFilmIds(mandje.getFilmIds()));
-		//modelAndView.addObject("totalePrijs", new TotalePrijs(berekenTotalePrijs(mandje.getFilmIds())));
+
+		Set<Long> filmIds=mandje.getFilmIds(); 
+		
+		Set<Film> films = new HashSet<>(filmIds.size());
+		BigDecimal totalePrijs=BigDecimal.ZERO;
+		
+		for (long id: filmIds) {
+			Optional<Film> film = filmService.read(id); 
+			film.ifPresent(film2 -> films.add(film2));
+			totalePrijs = totalePrijs.add(film.get().getPrijs());			
+		}
+		
+		modelAndView.addObject("filmsInMandje", films);
+		modelAndView.addObject("totalePrijs", new TotalePrijs(totalePrijs));
 		return modelAndView; 
 	}
-	
+
 	@PostMapping("mandje")
 	String verwijder(long[] verwijderid) {
 		if(verwijderid!=null) {
@@ -116,69 +88,38 @@ public class FilmController {
 	
 	@GetMapping("bevestigen/{id}")
 	ModelAndView bevestigen(@PathVariable long id) {
-		mandje.setKlantId(id);
 		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW); 
 		klantService.readKlant(id).ifPresent(klant -> modelAndView.addObject(klant));
 		modelAndView.addObject("aantalArtikelsInMandje", mandje.telAantalArtikelsInMandje()); 
 		return modelAndView;  
 	}
 
-//	@GetMapping("bevestigen/{id}")
-//	ModelAndView bevestigen(@PathVariable long id) {
-//		mandje.setKlantId(id);
-//		ModelAndView modelAndView = new ModelAndView(BEVESTIGEN_VIEW); 
-//		klantService.readKlant(id).ifPresent(klant -> modelAndView.addObject(klant));
-//		modelAndView.addObject("aantalArtikelsInMandje", mandje.telAantalArtikelsInMandje()); 
-//		ReservatieForm reservatieForm = new ReservatieForm(); 
-//		reservatieForm.setKlantId(id);
-//		reservatieForm.setFilmIds(mandje.getFilmIds());
-//		modelAndView.addObject(reservatieForm); 
-//		return modelAndView;  
-//	}	
-
 	@PostMapping("bevestigen/{id}")
 	ModelAndView bevestig(@PathVariable long id) {
+		List<Long> fouten = new ArrayList<>(); 
 		for (long filmId: mandje.getFilmIds()) {
-			if(filmService.read(filmId).get().getBeschikbaar()>0) {
-				Reservatie reservatie = new Reservatie(id, filmId);
-				reservatieService.create(reservatie);  // TODO deze method moet zowel toevoegen aan reservaties als wijzigen in flim
-				Film film = filmService.read(filmId).get();
-				filmService.update(film);
+			Reservatie reservatie = new Reservatie(id, filmId);
+			try {
+				reservatieService.reserveer(reservatie);
 			}
-			else {
-				idsMislukteReservaties.add(filmId); 
+			catch (Exception ex) {
+				fouten.add(filmId);
 			}
 		}
-		for(long idMislukt: idsMislukteReservaties) {
-			String titel = filmService.read(idMislukt).get().getTitel();
-			titelsMislukteReservaties.add(titel); 
-		}
-		return new ModelAndView(REDIRECT_NA_BEVESTIGEN); 
-	}	
+		return new ModelAndView("rapport", "fouten", fouten); 
+	}		
 	
 //	@PostMapping("bevestigen/{id}")
-//	ModelAndView bevestigen(ReservatieForm reservatieForm) {
+//	ModelAndView bevestig(@PathVariable long id) {
+//		List<Long> fouten = new ArrayList<>(); 
 //		for (long filmId: mandje.getFilmIds()) {
-//			if(filmService.read(filmId).get().getBeschikbaar()>0) {
-//				Reservatie reservatie = new Reservatie(reservatieForm.getKlantId(), filmId);
-//				reservatieService.create(reservatie);  // TODO deze method moet zowel toevoegen aan reservaties als wijzigen in flim
-//				Film film = filmService.read(filmId).get();
-//				filmService.update(film);
-//			}
-//			else {
-//				idsMislukteReservaties.add(filmId); 
+//			Reservatie reservatie = new Reservatie(id, filmId);
+//			int aantalAangepasteRecords=filmService.update(reservatie, filmId);
+//			if(aantalAangepasteRecords==0) {
+//				fouten.add(filmId);
 //			}
 //		}
-//		for(long id: idsMislukteReservaties) {
-//			String titel = filmService.read(id).get().getTitel();
-//			titelsMislukteReservaties.add(titel); 
-//		}
-//		return new ModelAndView(REDIRECT_NA_BEVESTIGEN); 
-//	}
+//		return new ModelAndView("rapport", "fouten", fouten); 
+//	}		
 	
-	@GetMapping("rapport") 
-	ModelAndView rapport() {
-		return new ModelAndView(RAPPORT_VIEW, "titelsMislukteReservaties", titelsMislukteReservaties);
-	}
-
 }

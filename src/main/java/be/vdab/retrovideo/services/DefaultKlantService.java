@@ -12,9 +12,10 @@ import be.vdab.retrovideo.repositories.KlantRepository;
 
 @Service
 @Transactional(readOnly=true, isolation=Isolation.READ_COMMITTED)
-public class DefaultKlantService implements KlantService {
+class DefaultKlantService implements KlantService {
 
 	private final KlantRepository klantRepository;
+
 	DefaultKlantService(KlantRepository klantRepository) {
 		this.klantRepository=klantRepository; 
 	}

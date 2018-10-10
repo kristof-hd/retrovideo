@@ -12,12 +12,12 @@ import be.vdab.retrovideo.entities.Film;
 import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
 
 @Repository
-public class JdbcFilmRepository implements FilmRepository {
+class JdbcFilmRepository implements FilmRepository {
 
 	private final JdbcTemplate template;
 	private static final String SELECT_FILMS_BY_GENRE="select id, genreid, titel, voorraad, gereserveerd, prijs from films where genreid=? order by titel"; 
 	private static final String READ = "select id, genreid, titel, voorraad, gereserveerd, prijs from films where id=?"; 
-	private static final String UPDATE_FILM="update films set gereserveerd=gereserveerd+1 where id=?"; 
+	private static final String UPDATE_FILM="update films set gereserveerd=gereserveerd+1 where id=? and voorraad>gereserveerd";	
 	private final RowMapper<Film> filmRowMapper=(resultSet, rowNum) -> new Film(resultSet.getLong("id"), resultSet.getLong("genreid"), resultSet.getString("titel"), resultSet.getInt("voorraad"), resultSet.getInt("gereserveerd"), resultSet.getBigDecimal("prijs"));
 
 	JdbcFilmRepository(JdbcTemplate template) {
@@ -38,12 +38,12 @@ public class JdbcFilmRepository implements FilmRepository {
 			return Optional.empty(); 
 		}
 	}
-	
+
 	@Override
-	public void update(Film film) {
-		if (template.update(UPDATE_FILM, film.getId())==0) {
-			throw new FilmNietGevondenException();
-			} 
-	}
+	public void update(long id) {
+		if (template.update(UPDATE_FILM, id) == 0) {
+			throw new FilmNietGevondenException(); 
+		}
+	}	
 	
 }

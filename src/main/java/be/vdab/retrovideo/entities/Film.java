@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.format.annotation.NumberFormat;
 
-public class Film {  // TODO default constructor weg, setters weg
+public class Film { 
 	
 	private long id;
 	private long genreId;
@@ -12,9 +12,6 @@ public class Film {  // TODO default constructor weg, setters weg
 	private long voorraad;
 	private long gereserveerd;
 	@NumberFormat(pattern="0.00") private BigDecimal prijs;
-	
-	public Film() {
-	}
 	
 	public Film(long id, long genreId, String titel, int voorraad, int gereserveerd, BigDecimal prijs) {
 		this.id=id;
@@ -29,50 +26,26 @@ public class Film {  // TODO default constructor weg, setters weg
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public long getGenreId() {
 		return genreId;
-	}
-
-	public void setGenreId(long genreId) {
-		this.genreId = genreId;
 	}
 
 	public String getTitel() {
 		return titel;
 	}
 
-	public void setTitel(String titel) {
-		this.titel = titel;
-	}
-
 	public long getVoorraad() {
 		return voorraad;
-	}
-
-	public void setVoorraad(long voorraad) {
-		this.voorraad = voorraad;
 	}
 
 	public long getGereserveerd() {
 		return gereserveerd;
 	}
 
-	public void setGereserveerd(long gereserveerd) {
-		this.gereserveerd = gereserveerd;
-	}
-
 	public BigDecimal getPrijs() {
 		return prijs;
 	}
 
-	public void setPrijs(BigDecimal prijs) {
-		this.prijs = prijs;
-	}
-	
 	public long getBeschikbaar() {
 		return voorraad-gereserveerd; 
 	}

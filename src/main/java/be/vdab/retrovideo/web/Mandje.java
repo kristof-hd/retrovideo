@@ -1,14 +1,14 @@
 package be.vdab.retrovideo.web;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Mandje {
 
 	void addFilmId(long filmId);
 	void verwijderFilmId(long filmId);
 	void verwijderFilmIds(long[] filmIds);
-	List<Long> getFilmIds(); 
+	Set<Long> getFilmIds(); 
 	int telAantalArtikelsInMandje();
-	void setKlantId(long klantId); 
+	boolean bevat(long filmId);
 	
 }

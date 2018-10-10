@@ -15,12 +15,12 @@ import be.vdab.retrovideo.services.KlantService;
 
 @Controller
 @RequestMapping("klant")
-public class KlantController {
+class KlantController {
 
 	private final KlantService klantService; 
 	private static final String KLANTEN_VIEW="klanten"; 
 	
-	public KlantController(KlantService klantService) {
+	KlantController(KlantService klantService) {
 		this.klantService = klantService; 
 	}
 	

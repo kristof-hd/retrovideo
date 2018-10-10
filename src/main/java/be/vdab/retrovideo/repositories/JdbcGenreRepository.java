@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import be.vdab.retrovideo.entities.Genre;
 
 @Repository
-public class JdbcGenreRepository implements GenreRepository {
+class JdbcGenreRepository implements GenreRepository {
 
 	private final JdbcTemplate template;
 	private static final String SELECT_ALL_GENRES="select id, naam from genres order by naam";

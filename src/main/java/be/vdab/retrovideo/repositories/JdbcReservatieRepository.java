@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import be.vdab.retrovideo.entities.Reservatie;
 
 @Repository
-public class JdbcReservatieRepository implements ReservatieRepository {
+class JdbcReservatieRepository implements ReservatieRepository {
 	
 	private final SimpleJdbcInsert insert; 
 

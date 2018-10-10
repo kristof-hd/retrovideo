@@ -1,9 +1,8 @@
 package be.vdab.retrovideo.web;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -13,8 +12,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class DefaultMandje implements Serializable, Mandje {
 
 	private static final long serialVersionUID=1L; 
-	private final List<Long> filmIds=new ArrayList<>(); 
-	private long klantId; 
+	private final Set<Long> filmIds=new HashSet<>(); 
 	
 	@Override
 	public void addFilmId(long filmId) {
@@ -28,15 +26,13 @@ public class DefaultMandje implements Serializable, Mandje {
 
 	@Override
 	public void verwijderFilmIds(long[] ids) {
-
 		for (long id : ids) {
-			
 			filmIds.remove(id); 
 		}
 	}
 	
 	@Override
-	public List<Long> getFilmIds(){
+	public Set<Long> getFilmIds() {
 		return filmIds; 
 	}
 	
@@ -46,8 +42,8 @@ public class DefaultMandje implements Serializable, Mandje {
 	}
 	
 	@Override
-	public void setKlantId(long klantId) {
-		this.klantId=klantId; 
+	public boolean bevat(long filmId) {
+		return filmIds.contains(filmId); 
 	}
 	
 }

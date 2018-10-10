@@ -12,7 +12,7 @@
 		<vdab:menu/>
 		<h1>Rapport</h1>
 		<c:choose>
-			<c:when test='${empty titelsMislukteReservaties}'> 
+			<c:when test='${empty fouten}'> 
 				<p>De reservatie is OK.</p>
 			</c:when>
 			<c:otherwise>
@@ -22,9 +22,9 @@
 							<tr><th>Film</th></tr>
 						</thead>
 						<tbody>
-							<c:forEach items='${titelsMislukteReservaties}' var='titel'>
+							<c:forEach items='${fouten}' var='filmId'>
 								<tr>
-									<td>${titel}</td>
+									<td>${filmId}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -33,4 +33,3 @@
 		</c:choose>
 	</body>
 </html>
-

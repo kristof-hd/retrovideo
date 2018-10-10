@@ -10,7 +10,6 @@
 	<body>
 		<vdab:menu/>
 		<h1>Retrovideo</h1>
-		<%-- id van het geselecteerde genre: ${geselecteerdeId} --%>
 		<nav>
 			<ul>
 				<c:forEach var='genre' items='${genres}'>
@@ -47,7 +46,6 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				
 			</ul>
 		</c:if>
 	</body>
