@@ -1,12 +1,8 @@
 package be.vdab.retrovideo.web;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.retrovideo.entities.Film;
 import be.vdab.retrovideo.entities.Reservatie;
+import be.vdab.retrovideo.exceptions.ReservatieException;
 import be.vdab.retrovideo.services.FilmService;
 import be.vdab.retrovideo.services.KlantService;
 import be.vdab.retrovideo.services.ReservatieService;
@@ -61,17 +58,13 @@ class FilmController {
 	@GetMapping("mandje")
 	ModelAndView toonMandje() {
 		ModelAndView modelAndView = new ModelAndView(MANDJE_VIEW);
+		
+		List<Film> films=filmService.readFilmsInMandje(mandje.getFilmIds());
 
-		Set<Long> filmIds=mandje.getFilmIds(); 
-		
-		Set<Film> films = new HashSet<>(filmIds.size());
 		BigDecimal totalePrijs=BigDecimal.ZERO;
-		
-		for (long id: filmIds) {
-			Optional<Film> film = filmService.read(id); 
-			film.ifPresent(film2 -> films.add(film2));
-			totalePrijs = totalePrijs.add(film.get().getPrijs());			
-		}
+		for(Film film: films) {
+			totalePrijs=totalePrijs.add(film.getPrijs()); 
+		}		
 		
 		modelAndView.addObject("filmsInMandje", films);
 		modelAndView.addObject("totalePrijs", new TotalePrijs(totalePrijs));
@@ -102,24 +95,11 @@ class FilmController {
 			try {
 				reservatieService.reserveer(reservatie);
 			}
-			catch (Exception ex) {
+			catch (ReservatieException ex) {
 				fouten.add(filmId);
 			}
 		}
 		return new ModelAndView("rapport", "fouten", fouten); 
 	}		
-	
-//	@PostMapping("bevestigen/{id}")
-//	ModelAndView bevestig(@PathVariable long id) {
-//		List<Long> fouten = new ArrayList<>(); 
-//		for (long filmId: mandje.getFilmIds()) {
-//			Reservatie reservatie = new Reservatie(id, filmId);
-//			int aantalAangepasteRecords=filmService.update(reservatie, filmId);
-//			if(aantalAangepasteRecords==0) {
-//				fouten.add(filmId);
-//			}
-//		}
-//		return new ModelAndView("rapport", "fouten", fouten); 
-//	}		
 	
 }

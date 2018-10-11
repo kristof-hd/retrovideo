@@ -18,7 +18,7 @@
 		</form:form>
 		<br>
 		<c:if test='${not empty klanten}'>
-			<table border="1" class="klanten">
+			<table class="klanten">
 				<thead>
 					<tr>
 						<th>Naam</th>

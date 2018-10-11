@@ -19,7 +19,7 @@
 				<h2>Mandje</h2>
 					<c:url value='mandje' var='url'/>
 					<form:form action='${url}' method='post'>
-						<table border="1">
+						<table>
 							<thead>
 								<tr>
 									<th>Film</th>
@@ -39,9 +39,7 @@
 								</c:forEach>
 								<tr>
 									<td>Totaal:</td>
-									<td>
- 										&euro; <spring:eval expression='totalePrijs.waarde'/> 
-									</td>
+									<td>&euro; <spring:eval expression='totalePrijs.waarde'/></td>
 									<td></td>
 								</tr>
 							</tbody>

@@ -2,6 +2,7 @@ package be.vdab.retrovideo.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -34,6 +35,11 @@ class DefaultFilmService implements FilmService {
 	@Transactional(readOnly=false, isolation=Isolation.READ_COMMITTED)
 	public void update(long id) {
 		filmRepository.update(id);
+	}
+	
+	@Override
+	public List<Film> readFilmsInMandje(Set<Long> ids) {
+		return filmRepository.readFilmsInMandje(ids);
 	}
 	
 }

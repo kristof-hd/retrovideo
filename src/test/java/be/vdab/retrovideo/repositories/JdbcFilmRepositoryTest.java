@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringRunner;
 
 import be.vdab.retrovideo.entities.Film;
-import be.vdab.retrovideo.exceptions.FilmNietGevondenException;
+import be.vdab.retrovideo.exceptions.ReservatieException;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
@@ -61,14 +60,13 @@ public class JdbcFilmRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 	@Test
 	public void update() {
 		long id = idVanTestFilm();
-		Film film = new Film(id, 1, "test", 1, 0, BigDecimal.valueOf(4));
-		repository.update(film);
+		repository.update(id);
 		assertEquals(Long.valueOf(1L), super.jdbcTemplate.queryForObject("select gereserveerd from films where id=?", Long.class, id));
 	}
 
-	@Test(expected = FilmNietGevondenException.class)
+	@Test(expected = ReservatieException.class)
 	public void updateOnbestaandeFilm() {
-		repository.update(new Film(-1, 1, "test", 1, 0, BigDecimal.valueOf(4)));
+		repository.update(-1); 
 	}
 
 }

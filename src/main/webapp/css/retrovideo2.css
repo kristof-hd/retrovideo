@@ -11,16 +11,20 @@ table {
 	border-collapse: collapse;
 }
 
+table, th, td {
+	border: 1px solid grey;	
+}
+
 thead th:nth-child(1) {
 	background: lightgrey; 
 	color: white;
-	text-align: left; 
+	text-align: left;
 }
 
 thead th:nth-child(2) {
 	background: lightgrey; 
 	color: white;
-	text-align: right; 
+	text-align: right;
 }
 
 thead th:nth-child(3) {
@@ -75,10 +79,12 @@ dd {
 .klanten thead th {
 	background: lightgrey; 
 	color: white;
-	text-align: left; 
+	text-align: left;
+	border: 1px solid grey;	
 }
 
 .klanten tbody td {
-	text-align: left; 
+	text-align: left;
+	border: 1px solid grey;	
 }
 
